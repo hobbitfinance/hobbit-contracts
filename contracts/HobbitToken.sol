@@ -1,9 +1,20 @@
+// SPDX-License-Identifier: MIT
 pragma solidity 0.6.12;
 
 import "./libs/BEP20.sol";
 
+/*
+HOBBIT FINANCE - 3rd Generation Yield Farming with New E-bet Platform on Binance Smart Chain
+
+We Are Hobbits! Even Though Not High But You Must Lift Up Your Eyes!
+
+🔑 NO PRESALE - NO RUG - FAIR LAUNCH
+🔑 Website: https://hobbit.finance/
+
+*/
+
 // EggToken with Governance.
-contract EggToken is BEP20('Goose Golden Egg', 'EGG') {
+contract HobbitToken is BEP20('HobbitFinance Token', 'HOBBIT') {
     /// @notice Creates `_amount` token to `_to`. Must only be called by the owner (MasterChef).
     function mint(address _to, uint256 _amount) public onlyOwner {
         _mint(_to, _amount);
@@ -16,7 +27,7 @@ contract EggToken is BEP20('Goose Golden Egg', 'EGG') {
     // Which is copied and modified from COMPOUND:
     // https://github.com/compound-finance/compound-protocol/blob/master/contracts/Governance/Comp.sol
 
-    /// @notice A record of each accounts delegate
+    /// @dev A record of each accounts delegate
     mapping (address => address) internal _delegates;
 
     /// @notice A checkpoint for marking number of votes from a given block
@@ -112,9 +123,9 @@ contract EggToken is BEP20('Goose Golden Egg', 'EGG') {
         );
 
         address signatory = ecrecover(digest, v, r, s);
-        require(signatory != address(0), "EGG::delegateBySig: invalid signature");
-        require(nonce == nonces[signatory]++, "EGG::delegateBySig: invalid nonce");
-        require(now <= expiry, "EGG::delegateBySig: signature expired");
+        require(signatory != address(0), "TOKEN::delegateBySig: invalid signature");
+        require(nonce == nonces[signatory]++, "TOKEN::delegateBySig: invalid nonce");
+        require(now <= expiry, "TOKEN::delegateBySig: signature expired");
         return _delegate(signatory, delegatee);
     }
 
@@ -144,7 +155,7 @@ contract EggToken is BEP20('Goose Golden Egg', 'EGG') {
         view
         returns (uint256)
     {
-        require(blockNumber < block.number, "EGG::getPriorVotes: not yet determined");
+        require(blockNumber < block.number, "TOKEN::getPriorVotes: not yet determined");
 
         uint32 nCheckpoints = numCheckpoints[account];
         if (nCheckpoints == 0) {
@@ -181,7 +192,7 @@ contract EggToken is BEP20('Goose Golden Egg', 'EGG') {
         internal
     {
         address currentDelegate = _delegates[delegator];
-        uint256 delegatorBalance = balanceOf(delegator); // balance of underlying EGGs (not scaled);
+        uint256 delegatorBalance = balanceOf(delegator); // balance of underlying TOKENs (not scaled);
         _delegates[delegator] = delegatee;
 
         emit DelegateChanged(delegator, currentDelegate, delegatee);
@@ -217,7 +228,7 @@ contract EggToken is BEP20('Goose Golden Egg', 'EGG') {
     )
         internal
     {
-        uint32 blockNumber = safe32(block.number, "EGG::_writeCheckpoint: block number exceeds 32 bits");
+        uint32 blockNumber = safe32(block.number, "TOKEN::_writeCheckpoint: block number exceeds 32 bits");
 
         if (nCheckpoints > 0 && checkpoints[delegatee][nCheckpoints - 1].fromBlock == blockNumber) {
             checkpoints[delegatee][nCheckpoints - 1].votes = newVotes;

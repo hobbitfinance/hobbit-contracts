@@ -16,6 +16,16 @@ pragma solidity 0.6.12;
 // XXX: import "./SafeMath.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
+/*
+
+HOBBIT FINANCE - 3rd Generation Yield Farming with New E-bet Platform on Binance Smart Chain
+
+We Are Hobbits! Even Though Not High But You Must Lift Up Your Eyes!
+
+🔑 NO PRESALE - NO RUG - FAIR LAUNCH
+🔑 Website: https://hobbit.finance/
+
+*/
 contract Timelock {
     using SafeMath for uint;
 

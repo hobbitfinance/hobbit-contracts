@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.6.12;
+pragma solidity >=0.4.22 <0.9.0;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./libs/IBEP20.sol";
 import "./libs/SafeBEP20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-import "./EggToken.sol";
+import "./HobbitToken.sol";
 
 // MasterChef is the master of Egg. He can make Egg and he is a fair guy.
 //
@@ -16,6 +16,18 @@ import "./EggToken.sol";
 // distributed and the community can show to govern itself.
 //
 // Have fun reading it. Hopefully it's bug-free. God bless.
+
+/*
+
+HOBBIT FINANCE - 3rd Generation Yield Farming with New E-bet Platform on Binance Smart Chain
+
+We Are Hobbits! Even Though Not High But You Must Lift Up Your Eyes!
+
+🔑 NO PRESALE - NO RUG - FAIR LAUNCH
+🔑 Website: https://hobbit.finance/
+
+*/
+
 contract MasterChef is Ownable {
     using SafeMath for uint256;
     using SafeBEP20 for IBEP20;
@@ -47,12 +59,12 @@ contract MasterChef is Ownable {
     }
 
     // The EGG TOKEN!
-    EggToken public egg;
+    HobbitToken public hobbit;
     // Dev address.
     address public devaddr;
     // EGG tokens created per block.
-    uint256 public eggPerBlock;
-    // Bonus muliplier for early egg makers.
+    uint256 public hobbitPerBlock;
+    // Bonus muliplier for early hobbit makers.
     uint256 public constant BONUS_MULTIPLIER = 1;
     // Deposit Fee address
     address public feeAddress;
@@ -71,16 +83,16 @@ contract MasterChef is Ownable {
     event EmergencyWithdraw(address indexed user, uint256 indexed pid, uint256 amount);
 
     constructor(
-        EggToken _egg,
+        HobbitToken _hobbit,
         address _devaddr,
         address _feeAddress,
-        uint256 _eggPerBlock,
+        uint256 _hobbitPerBlock,
         uint256 _startBlock
     ) public {
-        egg = _egg;
+        hobbit = _hobbit;
         devaddr = _devaddr;
         feeAddress = _feeAddress;
-        eggPerBlock = _eggPerBlock;
+        hobbitPerBlock = _hobbitPerBlock;
         startBlock = _startBlock;
     }
 
@@ -130,8 +142,8 @@ contract MasterChef is Ownable {
         uint256 lpSupply = pool.lpToken.balanceOf(address(this));
         if (block.number > pool.lastRewardBlock && lpSupply != 0) {
             uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
-            uint256 eggReward = multiplier.mul(eggPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
-            accEggPerShare = accEggPerShare.add(eggReward.mul(1e12).div(lpSupply));
+            uint256 hobbitReward = multiplier.mul(hobbitPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
+            accEggPerShare = accEggPerShare.add(hobbitReward.mul(1e12).div(lpSupply));
         }
         return user.amount.mul(accEggPerShare).div(1e12).sub(user.rewardDebt);
     }
@@ -156,10 +168,10 @@ contract MasterChef is Ownable {
             return;
         }
         uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
-        uint256 eggReward = multiplier.mul(eggPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
-        egg.mint(devaddr, eggReward.div(10));
-        egg.mint(address(this), eggReward);
-        pool.accEggPerShare = pool.accEggPerShare.add(eggReward.mul(1e12).div(lpSupply));
+        uint256 hobbitReward = multiplier.mul(hobbitPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
+        hobbit.mint(devaddr, hobbitReward.div(10));
+        hobbit.mint(address(this), hobbitReward);
+        pool.accEggPerShare = pool.accEggPerShare.add(hobbitReward.mul(1e12).div(lpSupply));
         pool.lastRewardBlock = block.number;
     }
 
@@ -217,13 +229,13 @@ contract MasterChef is Ownable {
         emit EmergencyWithdraw(msg.sender, _pid, amount);
     }
 
-    // Safe egg transfer function, just in case if rounding error causes pool to not have enough EGGs.
+    // Safe hobbit transfer function, just in case if rounding error causes pool to not have enough EGGs.
     function safeEggTransfer(address _to, uint256 _amount) internal {
-        uint256 eggBal = egg.balanceOf(address(this));
-        if (_amount > eggBal) {
-            egg.transfer(_to, eggBal);
+        uint256 hobbitBal = hobbit.balanceOf(address(this));
+        if (_amount > hobbitBal) {
+            hobbit.transfer(_to, hobbitBal);
         } else {
-            egg.transfer(_to, _amount);
+            hobbit.transfer(_to, _amount);
         }
     }
 
@@ -239,8 +251,8 @@ contract MasterChef is Ownable {
     }
 
     //Pancake has to add hidden dummy pools inorder to alter the emission, here we make it simple and transparent to all.
-    function updateEmissionRate(uint256 _eggPerBlock) public onlyOwner {
+    function updateEmissionRate(uint256 _hobbitPerBlock) public onlyOwner {
         massUpdatePools();
-        eggPerBlock = _eggPerBlock;
+        hobbitPerBlock = _hobbitPerBlock;
     }
 }
