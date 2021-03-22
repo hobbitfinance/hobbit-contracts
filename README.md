@@ -1,11 +1,13 @@
+---
+description: We Are Hobbits! Even Though Not High But You Must Lift Up Your Eyes!
+---
+
 # Hobbit Finance
 
-https://hobbit.finance/ Feel free to read the code. More details coming soon.
+![](.gitbook/assets/hobbit_logo.png)
 
-## Deployed Contracts / Hash
+Welcome to **HOBBIT FINANCE**- The 3rd Generation Deflationary Yield Farm & AMM on Binance Smart Chain & New Betting Platform.
 
-### BSCMAINNET
+Besides the buyback burning mechanism introduced by Goose Finance, we are implementing some unique innovative features on Hobbit Finance's yield farm to fight against the inflation problem such as Reduce Emission Rate & New Betting System.  
 
-- HobbitToken - https://bscscan.com/address/0x77e246073ccd33939be0255249fabb90d87ef066
-- MasterChef - https://bscscan.com/address/0x2b5dc8a9700ff6ccc3ce382a3c705f39dac9f624
-- Timelock - https://bscscan.com/address/0x95e527f18f3decc3bc6cd72d37decf90e9042708
+
