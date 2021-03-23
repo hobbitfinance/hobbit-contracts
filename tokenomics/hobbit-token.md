@@ -9,9 +9,9 @@
 
 **Emission Rate:**
 
-* 0.4 Hobbit/block \(first two hours\);
-* 0.2 Hobbit/block \(next six hours\);
-* 0.1 Hobbit/block \(next 160 hours\);
+* 0.2 Hobbit/block \(first two hours\);
+* 0.1 Hobbit/block \(next six hours\);
+* 0.01 Hobbit/block \(next 160 hours\);
 * After 168 hours  the emission rate will depend on the Total Value Lock.
 * maximum: 0.4 Hobbit/block
 * minimum : 0.01 Hobbit/block
